@@ -23,7 +23,7 @@ import (
 
 func main() {
 	h := sha256.New()
-	for _, filepattern := range os.Args {
+	for _, filepattern := range os.Args[1:] { // skip self
 		matchs, err := filepath.Glob(filepattern)
 		if err != nil {
 			log.Fatal(err)
@@ -31,6 +31,8 @@ func main() {
 		for _, filename := range matchs {
 			if err := appendSum(filename, h); err != nil {
 				log.Fatal(err)
+			} else {
+				// fmt.Println(filename)
 			}
 		}
 	}
